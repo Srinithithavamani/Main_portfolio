@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Srinithi T — Technical Trainer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:   #0a0a0a;
+    --dark:    #111111;
+    --charcoal:#1e1e1e;
+    --graphite:#2e2e2e;
+    --mid:     #6b6b6b;
+    --silver:  #a0a0a0;
+    --smoke:   #d4d4d4;
+    --offwhite:#f2f2f2;
+    --white:   #ffffff;
+    --accent:  #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35;
+  }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 64px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--white); letter-spacing: 0.02em; }
+  .nav-logo span { color: var(--silver); font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--silver); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--white); transform: scaleX(0); transition: transform 0.25s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .hero { min-height: 100vh; background: var(--black); display: flex; align-items: center; justify-content: center; text-align: center; padding: 7rem 2rem 4rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; animation: gridDrift 20s linear infinite; }
+  @keyframes gridDrift { 0% { background-position: 0 0; } 100% { background-position: 60px 60px; } }
+  .hero::after { content: ''; position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 65%); animation: orb 6s ease-in-out infinite alternate; pointer-events: none; }
+  @keyframes orb { 0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; } 100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; } }
+
+  .hero.on-light { background: var(--offwhite); }
+  .hero.on-light::before { background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px); }
+  .hero.on-light::after { background: radial-gradient(circle, rgba(0,0,0,0.06) 0%, transparent 65%); }
+  .hero.on-light .hero-tag { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.18); color: #333; }
+  .hero.on-light h1 { color: var(--black); }
+  .hero.on-light h1 em { color: var(--mid); }
+  .hero.on-light .hero-role { color: var(--mid); }
+  .hero.on-light .hero-desc { color: #444; }
+  .hero.on-light .btn-primary { background: var(--black); color: var(--white); }
+  .hero.on-light .btn-primary:hover { background: var(--graphite); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+  .hero.on-light .btn-outline { border-color: rgba(0,0,0,0.3); color: var(--black); }
+  .hero.on-light .btn-outline:hover { border-color: var(--black); background: rgba(0,0,0,0.05); }
+  .hero.on-light .hero-stats { border-top-color: rgba(0,0,0,0.1); }
+  .hero.on-light .stat-val { color: var(--black); }
+  .hero.on-light .stat-val span { color: var(--mid); }
+  .hero.on-light .stat-label { color: var(--mid); }
+
+  .hero-content { position: relative; z-index: 1; max-width: 780px; }
+  .hero-tag { display: inline-block; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: var(--smoke); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 1.1rem; border-radius: 100px; margin-bottom: 1.8rem; animation: fadeInDown 0.8s ease both; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3.2rem, 9vw, 6.5rem); color: var(--white); line-height: 1.0; margin-bottom: 0.5rem; animation: fadeInUp 0.9s 0.2s ease both; }
+  .hero h1 em { font-style: italic; color: var(--silver); }
+  .hero-role { font-family: 'DM Mono', monospace; font-size: 0.95rem; color: var(--mid); letter-spacing: 0.08em; margin-bottom: 1.8rem; animation: fadeInUp 0.9s 0.35s ease both; }
+  .hero-role::after { content: '|'; animation: blink 1s step-end infinite; margin-left: 2px; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero-desc { font-size: 1.05rem; color: var(--silver); line-height: 1.78; max-width: 580px; margin: 0 auto 2.5rem; animation: fadeInUp 0.9s 0.5s ease both; }
+  .hero-cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: fadeInUp 0.9s 0.65s ease both; }
+  .btn { padding: 0.78rem 2rem; border-radius: 4px; font-size: 0.88rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.22s; letter-spacing: 0.04em; }
+  .btn-primary { background: var(--white); color: var(--black); }
+  .btn-primary:hover { background: var(--smoke); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,255,255,0.15); }
+  .btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.3); color: var(--white); }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
+  .hero-stats { display: grid; grid-template-columns: repeat(4, auto); gap: 2.2rem 2.8rem; justify-content: center; margin: 4rem auto 0; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.08); animation: fadeInUp 0.9s 0.8s ease both; }
+  .stat-val { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--white); font-weight: 900; }
+  .stat-val span { color: var(--silver); }
+  .stat-label { font-size: 0.72rem; color: var(--mid); margin-top: 0.2rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeInUp   { from { opacity: 0; transform: translateY(24px); }  to { opacity: 1; transform: translateY(0); } }
+
+  section { padding: 5.5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--silver); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 4vw, 2.8rem); color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
+  .section-desc { font-size: 1rem; color: var(--silver); line-height: 1.72; max-width: 600px; }
+  .divider { width: 40px; height: 2px; background: var(--white); margin: 1.2rem 0 2.5rem; }
+
+  .light-section { background: var(--offwhite); }
+  .light-section .section-title { color: var(--black); }
+  .light-section .section-label { color: var(--mid); }
+  .light-section .section-desc { color: #444; }
+  .light-section .divider { background: var(--black); }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-visual { background: var(--charcoal); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; padding: 3rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+  .about-visual::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%); border-radius: 50%; }
+  .avatar-photo { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto 1.5rem; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 0 0 8px rgba(255,255,255,0.04); animation: pulseRing 3s ease-in-out infinite; }
+  @keyframes pulseRing { 0%, 100% { box-shadow: 0 0 0 8px rgba(255,255,255,0.04); } 50% { box-shadow: 0 0 0 16px rgba(255,255,255,0.01); } }
+  .about-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); margin-bottom: 0.25rem; }
+  .about-role-tag { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--mid); margin-bottom: 1.8rem; }
+  .contact-chips { display: flex; flex-direction: column; gap: 0.5rem; }
+  .chip { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 0.5rem 0.9rem; font-size: 0.82rem; color: var(--smoke); text-align: left; transition: background 0.2s; }
+  .chip:hover { background: rgba(255,255,255,0.09); }
+  .chip b { color: var(--white); }
+  a.chip { display: block; text-decoration: none; color: var(--smoke); cursor: pointer; }
+  .about-text p { color: #888; line-height: 1.82; margin-bottom: 1rem; }
+  .about-text .section-title { color: var(--white); }
+  .highlight-box { background: var(--charcoal); border-left: 2px solid var(--white); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin-top: 1.5rem; font-size: 0.9rem; color: var(--silver); font-style: italic; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
+  .skill-card { background: var(--charcoal); border-radius: 12px; padding: 1.6rem 1.4rem; border: 1px solid rgba(255,255,255,0.07); transition: all 0.28s; position: relative; overflow: hidden; }
+  .skill-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; }
+  .skill-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.25); box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
+  .skill-card:hover::after { opacity: 1; }
+  .skill-card-icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
+  .skill-card h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.65rem; color: var(--white); }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { background: rgba(255,255,255,0.06); color: var(--silver); font-size: 0.7rem; font-weight: 500; padding: 0.22rem 0.6rem; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; }
+  .tag:hover { background: rgba(255,255,255,0.14); color: var(--white); }
+
+  .timeline { position: relative; padding-left: 2rem; margin-top: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.1); }
+  .tl-item { position: relative; padding-bottom: 2.5rem; padding-left: 1.5rem; }
+  .tl-dot { position: absolute; left: -2.4rem; top: 0.4rem; width: 10px; height: 10px; border-radius: 50%; background: var(--white); border: 2px solid var(--dark); box-shadow: 0 0 0 3px rgba(255,255,255,0.15); animation: dotPulse 2.5s ease-in-out infinite; }
+  @keyframes dotPulse { 0%, 100% { box-shadow: 0 0 0 3px rgba(255,255,255,0.15); } 50% { box-shadow: 0 0 0 7px rgba(255,255,255,0.04); } }
+  .tl-date { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--silver); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+  .tl-role { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.1rem; color: var(--white); }
+  .tl-org { font-size: 0.85rem; color: var(--mid); margin-bottom: 1rem; }
+  .tl-list { list-style: none; }
+  .tl-list li { position: relative; padding-left: 1.1rem; font-size: 0.88rem; color: #888; line-height: 1.7; margin-bottom: 0.5rem; }
+  .tl-list li::before { content: '→'; position: absolute; left: 0; color: var(--silver); font-size: 0.8rem; }
+
+  .carousel-outer { overflow: hidden; margin-top: 2rem; position: relative; }
+  .carousel-outer::before, .carousel-outer::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none; }
+  .carousel-outer::before { left: 0; background: linear-gradient(to right, var(--black), transparent); }
+  .carousel-outer::after  { right: 0; background: linear-gradient(to left, var(--black), transparent); }
+  .carousel-outer.light::before { background: linear-gradient(to right, var(--offwhite), transparent); }
+  .carousel-outer.light::after  { background: linear-gradient(to left, var(--offwhite), transparent); }
+  .carousel-track { display: flex; gap: 1.4rem; animation: scrollX 30s linear infinite; width: max-content; }
+  .carousel-track:hover { animation-play-state: paused; }
+  @keyframes scrollX { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  .carousel-card { min-width: 240px; height: 160px; background: var(--charcoal); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.5rem; text-align: center; flex-shrink: 0; transition: all 0.28s; }
+  .carousel-card:hover { border-color: rgba(255,255,255,0.3); background: var(--graphite); transform: scale(1.04); }
+  .carousel-card .card-icon { font-size: 2rem; }
+  .carousel-card .card-label { font-family: 'Playfair Display', serif; font-size: 0.92rem; color: var(--white); font-weight: 700; }
+  .carousel-card .card-sub { font-size: 0.72rem; color: var(--mid); font-family: 'DM Mono', monospace; }
+
+  /* college cards — enlarged & highlighted */
+  .college-card {
+    min-width: 320px; width: 320px; height: 320px;
+    background: var(--white); border-radius: 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.7rem; padding: 1.6rem; text-align: center; flex-shrink: 0;
+    border: 1px solid var(--smoke); transition: all 0.3s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .college-card:hover { transform: scale(1.045); box-shadow: 0 20px 46px rgba(0,0,0,0.2); border-color: var(--graphite); }
+  .college-card .college-icon { font-size: 3.4rem; }
+  .college-card .college-photo {
+    width: 100%; height: 190px; object-fit: cover; border-radius: 10px; margin-bottom: 0.3rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  }
+  .college-card.featured { border: 2px solid var(--black); box-shadow: 0 10px 30px rgba(0,0,0,0.18); }
+  .college-card .college-name { font-size: 1rem; font-weight: 700; color: var(--black); }
+  .college-card .college-loc { font-size: 0.78rem; color: var(--mid); font-family: 'DM Mono', monospace; }
+
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+  .edu-card { background: var(--charcoal); border-radius: 12px; padding: 1.8rem; border: 1px solid rgba(255,255,255,0.07); transition: all 0.25s; }
+  .edu-card:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-3px); }
+  .edu-degree { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--white); }
+  .edu-college { font-size: 0.85rem; color: var(--silver); margin-bottom: 0.6rem; }
+  .edu-date { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--mid); }
+
+  .ach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
+  .ach-card { background: var(--charcoal); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.07); display: flex; gap: 1rem; align-items: flex-start; transition: all 0.25s; }
+  .ach-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.22); box-shadow: 0 12px 36px rgba(0,0,0,0.4); }
+  .ach-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .ach-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--white); }
+  .ach-card p { font-size: 0.82rem; color: var(--mid); line-height: 1.65; }
+
+  #contact { border-top: 1px solid rgba(0,0,0,0.06); text-align: center; }
+  .contact-cards { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; }
+  .contact-card { background: var(--charcoal); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem 2rem; text-align: center; min-width: 185px; transition: all 0.25s; }
+  .contact-card:hover { background: var(--graphite); transform: translateY(-3px); border-color: rgba(255,255,255,0.3); }
+  .contact-card .c-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .contact-card .c-label { font-size: 0.68rem; color: var(--mid); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; font-family: 'DM Mono', monospace; }
+  .contact-card .c-val { font-size: 0.86rem; color: var(--white); font-weight: 500; }
+
+  footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.05); text-align: center; padding: 1.8rem; font-size: 0.75rem; color: var(--graphite); font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+
+  .fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .stagger > * { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .stagger.visible > *:nth-child(1) { transition-delay: 0.05s; opacity:1; transform:none; }
+  .stagger.visible > *:nth-child(2) { transition-delay: 0.12s; opacity:1; transform:none; }
+  .stagger.visible > *:nth-child(3) { transition-delay: 0.19s; opacity:1; transform:none; }
+  .stagger.visible > *:nth-child(4) { transition-delay: 0.26s; opacity:1; transform:none; }
+  .stagger.visible > *:nth-child(5) { transition-delay: 0.33s; opacity:1; transform:none; }
+  .stagger.visible > *:nth-child(6) { transition-delay: 0.40s; opacity:1; transform:none; }
+
+  .marquee-bar { background: var(--white); color: var(--black); overflow: hidden; padding: 0.85rem 0; white-space: nowrap; }
+  .marquee-inner { display: inline-flex; gap: 3rem; animation: marquee 18s linear infinite; font-family: 'DM Mono', monospace; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .marquee-sep { color: var(--graphite); }
+
+  @media (max-width: 720px) {
+    .about-grid, .edu-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: repeat(2, auto); gap: 1.8rem 2rem; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    .college-card { min-width: 260px; width: 260px; height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Srinithi <span>T</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Work</a></li>
+    <li><a href="#colleges">Colleges</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO (section 1 — WHITE) -->
+<section class="hero on-light">
+  <div class="hero-content">
+    <span class="hero-tag"> Technical Trainer · Educator · Mentor</span>
+    <h1><em>Srinithi</em> T</h1>
+    <p class="hero-role">Turning complexity into clarity, one session at a time</p>
+    <p class="hero-desc"> 2 years empowering 1000+ students across Python Full Stack, UI/UX, Business Analysis, and Automation Testing — bridging the gap between academia and industry.</p>
+    <div class="hero-cta">
+      <a href="#experience" class="btn btn-primary">View My Journey</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-val">1000<span>+</span></div><div class="stat-label">Students Trained</div></div>
+      <div><div class="stat-val">100<span>+</span></div><div class="stat-label">Posters & Creatives</div></div>
+      <div><div class="stat-val">20<span>+</span></div><div class="stat-label">Internship sessions</div></div>
+      <div><div class="stat-val">6<span>+</span></div><div class="stat-label">Domains Covered</div></div>
+      <div><div class="stat-val">2<span>+</span></div><div class="stat-label">Years of Experience</div></div>
+      <div><div class="stat-val">50<span>+</span></div><div class="stat-label">Student Projects Mentored</div></div>
+      <div><div class="stat-val">40<span>+</span></div><div class="stat-label">Workshops Conducted</div></div>
+      <div><div class="stat-val">60<span>+</span></div><div class="stat-label">Posters Designed</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span>Python Full Stack</span><span class="marquee-sep">✦</span>
+    <span>Software Testing</span><span class="marquee-sep">✦</span>
+    <span>UI/UX Design</span><span class="marquee-sep">✦</span>
+    <span>Business Analysis</span><span class="marquee-sep">✦</span>
+    <span>Selenium Automation</span><span class="marquee-sep">✦</span>
+    <span>Curriculum Design</span><span class="marquee-sep">✦</span>
+    <span>Student Mentoring</span><span class="marquee-sep">✦</span>
+    <span>Content Creation</span><span class="marquee-sep">✦</span>
+    <span>Python Full Stack</span><span class="marquee-sep">✦</span>
+    <span>Software Testing</span><span class="marquee-sep">✦</span>
+    <span>UI/UX Design</span><span class="marquee-sep">✦</span>
+    <span>Business Analysis</span><span class="marquee-sep">✦</span>
+    <span>Selenium Automation</span><span class="marquee-sep">✦</span>
+    <span>Curriculum Design</span><span class="marquee-sep">✦</span>
+    <span>Student Mentoring</span><span class="marquee-sep">✦</span>
+    <span>Content Creation</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT (section 2 — BLACK) -->
+<section id="about" style="background:var(--dark);">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual fade-up">
+        <img class="avatar-photo" src="mine.jpeg" alt="Srinithi T"/>
+        <div class="about-name">Srinithi T</div>
+        <div class="about-role-tag">Technical Trainer · Coimbatore</div>
+        <div class="contact-chips">
+          <div class="chip">📞 <b>Phone:</b> +91 9940871877</div>
+          <div class="chip">✉️ <b>Email:</b> srinithithava@gmail.com</div>
+          <div class="chip">📍 <b>Location:</b> Coimbatore, Tamil Nadu</div>
+          <a href="https://www.linkedin.com/in/srinithi-thavamani" target="_blank" rel="noopener" class="chip">💼 <b>LinkedIn:</b> Srinithi Thavamani</a>
+          <div class="chip">💻 <b>GitHub:</b> Srinithi Thavamani</div>
+          <a href="https://www.behance.net/gallery/253270681/posters" target="_blank" rel="noopener" class="chip">🎨 <b>Posters:</b> Behance Portfolio</a>
+        </div>
+      </div>
+      <div class="about-text fade-up">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">Dynamic trainer,<br/>passionate educator</h2>
+        <div class="divider"></div>
+        <p>I'm a dynamic and passionate Technical Trainer with nearly 2 years of experience delivering hands-on training in Python Full Stack Development, Software Testing, UI/UX Design, and Business Analysis.</p>
+        <p>I specialize in designing practical learning modules, mentoring students in real-world projects, and bridging the gap between academic knowledge and industry needs.</p>
+        <div class="highlight-box">"Adept at conducting engaging sessions that combine technical expertise with creativity and problem-solving."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS (section 3 — WHITE) -->
+<section id="skills" class="light-section" style="background:var(--offwhite);">
+  <div class="container">
+    <div class="section-label fade-up">Core Expertise</div>
+    <h2 class="section-title fade-up">Skills & Technologies</h2>
+    <div class="divider fade-up"></div>
+    <div class="skills-grid stagger">
+      <div class="skill-card"><div class="skill-card-icon">🐍</div><h4>Programming & Development</h4><div class="skill-tags"><span class="tag">Python</span><span class="tag">Django</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Bootstrap</span><span class="tag">JavaScript</span><span class="tag">PostgreSQL</span><span class="tag">SQLite</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🧪</div><h4>Software Testing</h4><div class="skill-tags"><span class="tag">Manual Testing</span><span class="tag">Automation Testing</span><span class="tag">Selenium</span><span class="tag">Java</span><span class="tag">Test Case Design</span><span class="tag">SDLC</span><span class="tag">STLC</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🎨</div><h4>UI/UX Design</h4><div class="skill-tags"><span class="tag">Figma</span><span class="tag">Adobe Photoshop</span><span class="tag">Wireframing</span><span class="tag">Prototyping</span><span class="tag">Visual Design</span><span class="tag">Sketch</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">📊</div><h4>Business Analysis</h4><div class="skill-tags"><span class="tag">SDLC</span><span class="tag">Agile</span><span class="tag">BRD</span><span class="tag">FRD</span><span class="tag">SRS</span><span class="tag">Use Case Modelling</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🛠️</div><h4>Tools & Platforms</h4><div class="skill-tags"><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">PyCharm</span><span class="tag">Jira</span><span class="tag">MS Office Suite</span><span class="tag">Power BI</span><span class="tag">Excel</span><span class="tag">Tableau</span></div></div>
+      <div class="skill-card"><div class="skill-card-icon">🎤</div><h4>Soft Skills</h4><div class="skill-tags"><span class="tag">Public Speaking</span><span class="tag">Curriculum Design</span><span class="tag">Student Mentoring</span><span class="tag">Communication</span><span class="tag">Creativity</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE (section 4 — BLACK) -->
+<section id="experience" style="background:var(--dark);">
+  <div class="container">
+    <div class="section-label fade-up">Career</div>
+    <h2 class="section-title fade-up">Work Experience</h2>
+    <div class="divider fade-up"></div>
+    <div class="timeline fade-up">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">MAY 2024 — JUNE 2026</div>
+        <div class="tl-role">Technical Trainer</div>
+        <div class="tl-org">App Innovation Technologies Pvt Ltd, Coimbatore</div>
+        <ul class="tl-list">
+          <li>Conducted comprehensive training sessions in Python Full Stack Development using Django, HTML, CSS, Bootstrap, PostgreSQL, and SQLite.</li>
+          <li>Delivered practical and theory-based sessions on Manual and Automation Testing (Selenium + Java).</li>
+          <li>Trained students on UI/UX Design using Figma and Photoshop, covering wireframing, prototyping, and visual design.</li>
+          <li>Provided comprehensive training on Business Analysis concepts — SDLC, Agile, BRD, FRD, SRS, and use case modelling.</li>
+          <li>Designed and delivered 100+ creative posters and promotional materials for workshops, sessions, and internship programs.</li>
+          <li>Guided and mentored students on real-time IT projects, connecting classroom learning to industry-level applications.</li>
+          <li>Mentored learners in resume writing, portfolio building, and mock interviews to enhance placement readiness.</li>
+          <li>Organized and led 15-day internship programs across domains like Testing, Full Stack Development, Designing, and Business Analysis.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLEGES CAROUSEL (section 5 — WHITE, enlarged & highlighted) -->
+<section id="colleges" class="light-section" style="background:var(--offwhite); padding: 6rem 0;">
+  <div class="container" style="padding: 0 2rem;">
+    <div class="section-label fade-up">Outreach</div>
+    <h2 class="section-title fade-up">Colleges Handled</h2>
+    <p class="section-desc fade-up">Conducted workshops, seminars, and training programs across engineering and arts & science colleges throughout Tamil Nadu.</p>
+    <div class="divider fade-up"></div>
+  </div>
+  <div class="carousel-outer light fade-up">
+    <div class="carousel-track" style="animation-duration:34s;">
+
+      <div class="college-card featured">
+        <img class="college-photo" src="image.png">
+        <div class="college-name">Kovai Kalaimagal College</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+      <div class="college-card featured">
+        <img class="college-photo" src="sri sakthi.jpg">
+        <div class="college-name">Sri Sakthi college of engineering</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+      <div class="college-card featured">
+        <img class="college-photo" src="sankara ploy.jpg">
+        <div class="college-name">Sankara polytechnic college</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="sankara.jpg">
+        <div class="college-name">Sankara college of science and commerce</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="ramakrishna poly.jpg">
+        <div class="college-name">Sri Ramakrishna polytechnic college </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="ramakrishna arts.jpg">
+        <div class="college-name">Sri Ramakrishna college of Arts and Science </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="psg.jpg">
+        <div class="college-name">PSG Polytechnic College</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="providence.jpg">
+        <div class="college-name">Providence college for women </div>
+        <div class="college-loc">Ooty</div>
+      </div>
+
+       <div class="college-card featured">
+        <img class="college-photo" src="ppg.jpg">
+        <div class="college-name">PPG institute of technology </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="ngp.jpg">
+        <div class="college-name">Ngp institute of technology </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="kumaraguru.jpg">
+        <div class="college-name">KCT </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="krishnammal.jpg">
+        <div class="college-name">PSGR Krishnammal College for women </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="kgisl.jpg">
+        <div class="college-name">Kgisl institute of technology </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="eshwar.jpg">
+        <div class="college-name">Sri Eshwar college of engineering </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+      
+      <div class="college-card featured">
+        <img class="college-photo" src="ctk.jpg">
+        <div class="college-name">Christ the king polytechnic college </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="kongunadu.jpg">
+        <div class="college-name">Kongunadu Arts and Science college </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+
+
+      <!-- <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">Sri Krishna Arts & Science College</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">PKR Arts & Science College for Women</div><div class="college-loc">Gobichettipalayam</div></div>
+      <div class="college-card"><div class="college-icon">🏛️</div><div class="college-name">PSG college of arts and science </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">Kongunadu Arts & Science College</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sri Eshwar college of engineering </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">Avinashilingam University</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏛️</div><div class="college-name">Kovai kalaimagal college of arts and science</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sankara polytechnic college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sri Sakthi college of engineering  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Ngp institute of technology </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sankara college of science and commerce  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Kgisl institute of technology </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Christ the king polytechnic college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sri Ramakrishna polytechnic college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Kumaraguru college of technology  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">PSG polytechnic college  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Providence college for women </div><div class="college-loc">Ooty</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">PSGR krishnammal college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">PPG institute of technology </div><div class="college-loc">Coimbatore</div></div> -->
+      <!-- duplicate for seamless loop -->
+      <div class="college-card featured">
+        <img class="college-photo" src="image.png">
+        <div class="college-name">Kovai Kalaimagal College</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+
+      <div class="college-card featured">
+        <img class="college-photo" src="sri sakthi.jpg">
+        <div class="college-name">Sri Sakthi college of engineering</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+      <div class="college-card featured">
+        <img class="college-photo" src="sankara ploy.jpg">
+        <div class="college-name">Sankara polytechnic college</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="sankara.jpg">
+        <div class="college-name">Sankara college of science and commerce</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="ramakrishna poly.jpg">
+        <div class="college-name">Sri Ramakrishna polytechnic college </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="ramakrishna arts.jpg">
+        <div class="college-name">Sri Ramakrishna college of Arts and Science </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="psg.jpg">
+        <div class="college-name">PSG Polytechnic College</div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="providence.jpg">
+        <div class="college-name">Providence college for women </div>
+        <div class="college-loc">Ooty</div>
+      </div>
+
+       <div class="college-card featured">
+        <img class="college-photo" src="ppg.jpg">
+        <div class="college-name">PPG institute of technology </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="ngp.jpg">
+        <div class="college-name">Ngp institute of technology </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="kumaraguru.jpg">
+        <div class="college-name">KCT </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="krishnammal.jpg">
+        <div class="college-name">PSGR Krishnammal College for women </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="kgisl.jpg">
+        <div class="college-name">Kgisl institute of technology </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+
+      <div class="college-card featured">
+        <img class="college-photo" src="eshwar.jpg">
+        <div class="college-name">Sri Eshwar college of engineering </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+      
+      <div class="college-card featured">
+        <img class="college-photo" src="ctk.jpg">
+        <div class="college-name">Christ the king polytechnic college </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+
+      <div class="college-card featured">
+        <img class="college-photo" src="kongunadu.jpg">
+        <div class="college-name">Kongunadu Arts and Science college </div>
+        <div class="college-loc">Coimbatore</div>
+      </div>
+      <!-- <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">Sri Krishna Arts & Science College</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">PKR Arts & Science College for Women</div><div class="college-loc">Gobichettipalayam</div></div>
+      <div class="college-card"><div class="college-icon">🏛️</div><div class="college-name">PSG college of arts and science </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">Kongunadu Arts & Science College</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sri Eshwar college of engineering </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏫</div><div class="college-name">Avinashilingam University</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🏛️</div><div class="college-name">Kovai kalaimagal college of arts and science</div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sankara polytechnic college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sri Sakthi college of engineering  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Ngp institute of technology </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sankara college of science and commerce  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Kgisl institute of technology </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Christ the king polytechnic college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Sri Ramakrishna polytechnic college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Kumaraguru college of technology  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">PSG polytechnic college  </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">Providence college for women </div><div class="college-loc">Ooty</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">PSGR krishnammal college </div><div class="college-loc">Coimbatore</div></div>
+      <div class="college-card"><div class="college-icon">🎓</div><div class="college-name">PPG institute of technology </div><div class="college-loc">Coimbatore</div></div> -->
+  </div>
+</section>
+
+<!-- WHAT I TEACH carousel (section 6 — BLACK) -->
+<section style="background:var(--dark); padding:5rem 0 4rem;">
+  <div class="container" style="padding:0 2rem;">
+    <div class="section-label fade-up">Training Domains</div>
+    <h2 class="section-title fade-up">What I Teach</h2>
+    <div class="divider fade-up"></div>
+  </div>
+  <div class="carousel-outer fade-up" style="margin-top:1rem;">
+    <div class="carousel-track" style="animation-duration:20s; animation-direction:reverse;">
+      <div class="carousel-card"><div class="card-icon">🐍</div><div class="card-label">Python Full Stack</div><div class="card-sub">Django · HTML · CSS · JS</div></div>
+      <div class="carousel-card"><div class="card-icon">🧪</div><div class="card-label">Software Testing</div><div class="card-sub">Manual · Automation · Selenium</div></div>
+      <div class="carousel-card"><div class="card-icon">🎨</div><div class="card-label">UI/UX Design</div><div class="card-sub">Figma · Photoshop · Wireframes</div></div>
+      <div class="carousel-card"><div class="card-icon">📊</div><div class="card-label">Business Analysis</div><div class="card-sub">BRD · FRD · SRS · Agile</div></div>
+      <div class="carousel-card"><div class="card-icon">🗄️</div><div class="card-label">Databases</div><div class="card-sub">PostgreSQL · SQLite · SQL</div></div>
+      <div class="carousel-card"><div class="card-icon">💼</div><div class="card-label">Career Readiness</div><div class="card-sub">Resume · Interviews · Portfolio</div></div>
+      <div class="carousel-card"><div class="card-icon">🤝</div><div class="card-label">Internship Programs</div><div class="card-sub">15-Day Industry Immersion</div></div>
+      <div class="carousel-card"><div class="card-icon">🖌️</div><div class="card-label">Content Creation</div><div class="card-sub">Posters · Banners · Creatives</div></div>
+      <div class="carousel-card"><div class="card-icon">🐍</div><div class="card-label">Python Full Stack</div><div class="card-sub">Django · HTML · CSS · JS</div></div>
+      <div class="carousel-card"><div class="card-icon">🧪</div><div class="card-label">Software Testing</div><div class="card-sub">Manual · Automation · Selenium</div></div>
+      <div class="carousel-card"><div class="card-icon">🎨</div><div class="card-label">UI/UX Design</div><div class="card-sub">Figma · Photoshop · Wireframes</div></div>
+      <div class="carousel-card"><div class="card-icon">📊</div><div class="card-label">Business Analysis</div><div class="card-sub">BRD · FRD · SRS · Agile</div></div>
+      <div class="carousel-card"><div class="card-icon">🗄️</div><div class="card-label">Databases</div><div class="card-sub">PostgreSQL · SQLite · SQL</div></div>
+      <div class="carousel-card"><div class="card-icon">💼</div><div class="card-label">Career Readiness</div><div class="card-sub">Resume · Interviews · Portfolio</div></div>
+      <div class="carousel-card"><div class="card-icon">🤝</div><div class="card-label">Internship Programs</div><div class="card-sub">15-Day Industry Immersion</div></div>
+      <div class="carousel-card"><div class="card-icon">🖌️</div><div class="card-label">Content Creation</div><div class="card-sub">Posters · Banners · Creatives</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION (section 7 — WHITE) -->
+<section id="education" class="light-section" style="background:var(--offwhite);">
+  <div class="container">
+    <div class="section-label fade-up">Academic Background</div>
+    <h2 class="section-title fade-up">Education</h2>
+    <div class="divider fade-up"></div>
+    <div class="edu-grid stagger">
+      <div class="edu-card"><div class="edu-degree">Master of Science in Computer Science</div><div class="edu-college">Sri Krishna Arts and Science College</div><div class="edu-date">JUNE 2022 — APR 2024</div></div>
+      <div class="edu-card"><div class="edu-degree">Bachelor of Science in Computer Science</div><div class="edu-college">PKR Arts and Science College for Women</div><div class="edu-date">JUNE 2019 — MAY 2022</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS (section 8 — BLACK) -->
+<section id="achievements" style="background:var(--dark);">
+  <div class="container">
+    <div class="section-label fade-up">Impact</div>
+    <h2 class="section-title fade-up">Achievements & Contributions</h2>
+    <div class="divider fade-up"></div>
+    <div class="ach-grid stagger">
+      <div class="ach-card"><div class="ach-icon">🏟️</div><div><h4>Large-Scale Training</h4><p>Conducted multiple technical workshops and training programs, handling 1000+ students across various domains.</p></div></div>
+      <div class="ach-card"><div class="ach-icon">🎨</div><div><h4>60+ Creative Designs</h4><p>Created and delivered over 60+ posters and promotional designs for workshops, events, and internship campaigns.</p></div></div>
+      <div class="ach-card"><div class="ach-icon">💻</div><div><h4>Student Due List System</h4><p>Designed and implemented a "Student Due List Management System" to efficiently manage 80+ student databases.</p></div></div>
+      <div class="ach-card"><div class="ach-icon">📚</div><div><h4>Industry-Oriented Modules</h4><p>Developed industry-oriented training modules and practical projects to enhance learning outcomes and placement readiness.</p></div></div>
+      <div class="ach-card"><div class="ach-icon">🏅</div><div><h4>Recognized Trainer</h4><p>Recognized for delivering interactive, hands-on sessions that improved student engagement and placement readiness.</p></div></div>
+      <div class="ach-card"><div class="ach-icon">🤝</div><div><h4>Corporate Collaboration</h4><p>Collaborated with academic and corporate teams to execute successful internship and training initiatives.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT (section 9 — WHITE) -->
+<section id="contact" class="light-section" style="background:var(--offwhite);">
+  <div class="container">
+    <div class="section-label fade-up">Let's Connect</div>
+    <h2 class="section-title fade-up">Ready to collaborate?</h2>
+    <p class="section-desc fade-up" style="margin:0 auto 0;">Whether you're looking for a passionate trainer, a creative collaborator, or a mentor for your students — I'd love to hear from you.</p>
+    <div class="contact-cards stagger">
+      <div class="contact-card"><div class="c-icon">📞</div><div class="c-label">Phone</div><div class="c-val">+91 9940871877</div></div>
+      <div class="contact-card"><div class="c-icon">✉️</div><div class="c-label">Email</div><div class="c-val">srinithithava@gmail.com</div></div>
+      <div class="contact-card"><div class="c-icon">📍</div><div class="c-label">Location</div><div class="c-val">Coimbatore, Tamil Nadu</div></div>
+      <div class="contact-card"><div class="c-icon">💼</div><div class="c-label">LinkedIn</div><div class="c-val">Srinithi Thavamani</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 · Srinithi T · Technical Trainer · Coimbatore, Tamil Nadu</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
